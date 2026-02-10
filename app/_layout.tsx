@@ -4,15 +4,22 @@ import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
 import './global.css';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import { AuthProvider } from '@/contexts/AuthContext';
-// import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useEffect, useState } from 'react';
+
+import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
 
 export const unstable_settings = {
   initialRouteName: 'splash-first',
 };
 
 SplashScreen.preventAutoHideAsync();
+
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { retry: 2 } },
+});
 
 export default function RootLayout() {
   // const colorScheme = useColorScheme();
@@ -45,8 +52,12 @@ export default function RootLayout() {
   }
 
   return (
-    <AuthProvider>
-      <Slot />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <GluestackUIProvider mode="light">
+          <Slot />
+        </GluestackUIProvider>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
