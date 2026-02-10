@@ -1,3 +1,4 @@
+import { useFonts } from 'expo-font';
 import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import 'react-native-reanimated';
@@ -17,6 +18,15 @@ export default function RootLayout() {
   // const colorScheme = useColorScheme();
   const [isReady, setIsReady] = useState(false);
 
+  const [loaded, error] = useFonts({
+    'Inter-Regular': require('../assets/fonts/Inter-Regular.ttf'),
+    'Inter-Bold': require('../assets/fonts/Inter-Bold.ttf'),
+    'Inter-SemiBold': require('../assets/fonts/Inter-SemiBold.ttf'),
+    'Satoshi-Regular': require('../assets/fonts/Satoshi-Regular.otf'),
+    'Satoshi-Bold': require('../assets/fonts/Satoshi-Bold.otf'),
+    'Satoshi-Black': require('../assets/fonts/Satoshi-Black.ttf'),
+  });
+
   useEffect(() => {
     async function prepare() {
       try {
@@ -30,7 +40,7 @@ export default function RootLayout() {
     prepare();
   }, []);
 
-  if (!isReady) {
+  if (!isReady && !error) {
     return null;
   }
 

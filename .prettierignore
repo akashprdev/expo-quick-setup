@@ -1,24 +1,25 @@
 # Dependencies
 node_modules
-.pnp
-.pnp.js
+
+# Expo
+.expo
+.expo-shared
+web-build
+dist
+
+# React Native
+android
+ios
 
 # Build outputs
-dist
 build
-out
 coverage
 
-# Cache & temp
+# Cache & temp files
 .cache
 .tmp
 .temp
 *.log
-
-# Lock files (optional – remove if you want them formatted)
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
 
 # Environment files
 .env
@@ -27,14 +28,12 @@ pnpm-lock.yaml
 
 # Generated files
 *.min.js
-*.min.css
 *.bundle.js
 
-# Framework-specific
-.next
-.nuxt
-.svelte-kit
-.vercel
+# Lock files (optional)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
 
 # IDE / OS
 .vscode
