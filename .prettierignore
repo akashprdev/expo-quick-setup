@@ -1,0 +1,43 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+dist
+build
+out
+coverage
+
+# Cache & temp
+.cache
+.tmp
+.temp
+*.log
+
+# Lock files (optional – remove if you want them formatted)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Generated files
+*.min.js
+*.min.css
+*.bundle.js
+
+# Framework-specific
+.next
+.nuxt
+.svelte-kit
+.vercel
+
+# IDE / OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db

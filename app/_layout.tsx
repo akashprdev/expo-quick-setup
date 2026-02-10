@@ -1,7 +1,7 @@
-import { Stack } from 'expo-router';
+import { Slot } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
+import './global.css';
 
 import { AuthProvider } from '@/contexts/AuthContext';
 // import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -13,7 +13,6 @@ export const unstable_settings = {
 
 SplashScreen.preventAutoHideAsync();
 
-
 export default function RootLayout() {
   // const colorScheme = useColorScheme();
   const [isReady, setIsReady] = useState(false);
@@ -21,7 +20,7 @@ export default function RootLayout() {
   useEffect(() => {
     async function prepare() {
       try {
-        await new Promise(resolve => setTimeout(resolve, 1500)); // example delay
+        await new Promise((resolve) => setTimeout(resolve, 1500)); // example delay
       } finally {
         setIsReady(true);
         await SplashScreen.hideAsync();
@@ -37,16 +36,7 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      {/* <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}> */}
-      <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="splash-first" options={{ headerShown: false }} />
-        <Stack.Screen name="splash-second" options={{ headerShown: false }} />
-        <Stack.Screen name="login" options={{ headerShown: false }} />
-        <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-      {/* </ThemeProvider> */}
+      <Slot />
     </AuthProvider>
   );
 }

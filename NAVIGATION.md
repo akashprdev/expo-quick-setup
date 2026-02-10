@@ -1,25 +1,28 @@
 # Aumbram App Navigation Flow
 
 ## Overview
+
 This app implements a complete authentication flow with splash screens, login, drawer navigation, and bottom tabs.
 
 ## Navigation Structure
 
 ### 1. **Splash Screens** (First Time Launch)
+
 - **First Splash** (`/splash-first`) - Shows for 2.5 seconds with animated logo
 - **Second Splash** (`/splash-second`) - Shows for 2 seconds, checks auth status
 
 ### 2. **Authentication**
+
 - **Login Screen** (`/login`) - Email/password authentication
 - Uses `AuthContext` to manage authentication state
 - Credentials are persisted using AsyncStorage
 
 ### 3. **Main App** (After Login)
+
 - **Drawer Navigation** (`/(drawer)`) - Side menu with:
   - **Home** - Contains bottom tabs
   - **Settings** - App settings and preferences
   - **Profile** - User profile and account info
-  
 - **Bottom Tabs** (Inside Drawer) - Main navigation with:
   - **Home tab** (`/index`)
   - **Explore tab** (`/explore`)
@@ -49,11 +52,13 @@ Check Auth Status
 ## Key Files
 
 ### Core Navigation
+
 - `app/_layout.tsx` - Root layout with AuthProvider
 - `app/(drawer)/_layout.tsx` - Drawer navigation layout
 - `app/(drawer)/(tabs)/_layout.tsx` - Bottom tabs navigation
 
 ### Screens
+
 - `app/splash-first.tsx` - First splash screen
 - `app/splash-second.tsx` - Second splash screen with auth check
 - `app/login.tsx` - Login screen
@@ -63,17 +68,21 @@ Check Auth Status
 - `app/(drawer)/profile.tsx` - Profile screen
 
 ### Context & Components
+
 - `contexts/AuthContext.tsx` - Authentication state management
 - `components/navigation/CustomDrawerContent.tsx` - Custom drawer menu
 
 ## Using the Drawer
 
 ### Opening the Drawer
+
 Users can open the drawer by:
+
 1. **Swiping from the left edge** of the screen
 2. **Tapping the menu icon** in the header (if you add one)
 
 ### Drawer Menu Items
+
 - **Home** - Navigate to bottom tabs (Home/Explore)
 - **Settings** - App preferences and configuration
 - **Profile** - User profile and account management
@@ -90,11 +99,14 @@ Users can open the drawer by:
 ## Customization
 
 ### Change Splash Duration
+
 Edit the `setTimeout` values in:
+
 - `app/splash-first.tsx` (currently 2500ms)
 - `app/splash-second.tsx` (currently 2000ms)
 
 ### Add Real Authentication
+
 Replace the mock login in `app/login.tsx` with your actual API call:
 
 ```typescript
@@ -111,13 +123,17 @@ const handleLogin = async () => {
 ```
 
 ### Add More Tabs
+
 Edit `app/(drawer)/(tabs)/_layout.tsx` and add more `<Tabs.Screen>` components.
 
 ### Add More Drawer Items
+
 Edit `app/(drawer)/_layout.tsx` and add more `<Drawer.Screen>` components, then create corresponding screen files.
 
 ### Customize Drawer Content
+
 Edit `components/navigation/CustomDrawerContent.tsx` to:
+
 - Change user avatar style
 - Add custom menu items
 - Modify logout button
@@ -142,6 +158,7 @@ Root Stack
 ## Features
 
 ### Drawer Features
+
 - ✅ Custom drawer content with user profile
 - ✅ Logout functionality
 - ✅ Settings screen with toggles
@@ -150,12 +167,14 @@ Root Stack
 - ✅ Beautiful UI with modern design
 
 ### Bottom Tabs Features
+
 - ✅ Home and Explore tabs
 - ✅ Haptic feedback on tab press
 - ✅ Icon-based navigation
 - ✅ Nested inside drawer
 
 ### Authentication Features
+
 - ✅ Persistent login state
 - ✅ Automatic auth check on app launch
 - ✅ Smooth navigation flow

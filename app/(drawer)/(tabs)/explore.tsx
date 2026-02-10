@@ -23,13 +23,15 @@ export default function TabTwoScreen() {
             name="chevron.left.forwardslash.chevron.right"
             style={styles.headerImage}
           />
-        }>
+        }
+      >
         <ThemedView style={styles.titleContainer}>
           <ThemedText
             type="title"
             style={{
               fontFamily: Fonts.rounded,
-            }}>
+            }}
+          >
             Explore
           </ThemedText>
         </ThemedView>
@@ -41,8 +43,9 @@ export default function TabTwoScreen() {
             <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
           </ThemedText>
           <ThemedText>
-            The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-            sets up the tab navigator.
+            The layout file in{' '}
+            <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText> sets up the tab
+            navigator.
           </ThemedText>
           <ExternalLink href="https://docs.expo.dev/router/introduction">
             <ThemedText type="link">Learn more</ThemedText>
@@ -56,8 +59,8 @@ export default function TabTwoScreen() {
         </Collapsible>
         <Collapsible title="Images">
           <ThemedText>
-            For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-            <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
+            For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText>{' '}
+            and <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
             different screen densities
           </ThemedText>
           <Image
@@ -72,7 +75,8 @@ export default function TabTwoScreen() {
           <ThemedText>
             This template has light and dark mode support. The{' '}
             <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-            what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
+            what the user&apos;s current color scheme is, and so you can adjust UI colors
+            accordingly.
           </ThemedText>
           <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
             <ThemedText type="link">Learn more</ThemedText>
@@ -91,7 +95,8 @@ export default function TabTwoScreen() {
           {Platform.select({
             ios: (
               <ThemedText>
-                The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
+                The{' '}
+                <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
                 component provides a parallax effect for the header image.
               </ThemedText>
             ),
