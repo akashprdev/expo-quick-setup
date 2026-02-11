@@ -6,16 +6,27 @@ import {
   useVerifyOtpMutation,
   VerifyOtpRequest,
 } from '@/services/mutate/auth/user/verifyVendorOtp';
+import { useUserStore } from '@/store/useUserStore';
 import { encryptCrypto } from '@/utility/crypto';
 import { getDeviceAndIpInfo } from '@/utility/getDeviceAndIpInfo';
 import { useForm } from '@tanstack/react-form';
 import { Image, ImageBackground } from 'expo-image';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useShallow } from 'zustand/react/shallow';
 
+import { AppToast } from '@/components/ui/toast/AppToast';
+import { CircleCheckBigIcon, CircleXIcon } from 'lucide-react-native';
 import React from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
-export default function VerifyOtp() {
+function VerifyOtp() {
+  const { setUser, setLoggedIn } = useUserStore(
+    useShallow((state) => ({
+      setUser: state.setUser,
+      setLoggedIn: state.setLoggedIn,
+    }))
+  );
+
   const params = useLocalSearchParams();
 
   const router = useRouter();
@@ -42,7 +53,48 @@ export default function VerifyOtp() {
         user_agent: deviceInfo?.user_agent || '',
       } as VerifyOtpRequest;
 
-      otpVerify({ payload });
+      otpVerify(
+        { payload },
+        {
+          onSuccess: (data) => {
+            toast.show({
+              placement: 'bottom',
+              render: ({ id }) => (
+                <AppToast id={id} title={'OTP verified successfully'} icon={CircleCheckBigIcon} />
+              ),
+            });
+
+            const { is_signup_complete, is_category_selected, user_details } = data.data;
+
+            const userData = {
+              id: user_details.id,
+              name: user_details.name,
+              email: user_details.email,
+              phone: user_details.phone,
+              signupComplete: is_signup_complete,
+              categorySelected: is_category_selected,
+            };
+            setUser(userData);
+
+            if (!is_signup_complete) {
+              router.push('/(auth)/accountSetup');
+            }
+            // else if (!is_category_selected) {
+            //   router.push('/(auth)/selectCategory');
+            // }
+            else {
+              setLoggedIn(true);
+              router.push('/(drawer)/(tabs)/explore');
+            }
+          },
+          onError: (error: any) => {
+            toast.show({
+              placement: 'bottom',
+              render: ({ id }) => <AppToast id={id} title={error.message} icon={CircleXIcon} />,
+            });
+          },
+        }
+      );
     },
   });
 
@@ -149,3 +201,5 @@ const styles = StyleSheet.create({
     height: 80,
   },
 });
+
+export default VerifyOtp;

@@ -1,4 +1,4 @@
-import { useAuth } from '@/contexts/AuthContext';
+import { useUserStore } from '@/store/useUserStore';
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -7,13 +7,19 @@ import {
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useShallow } from 'zustand/react/shallow';
 
 export function CustomDrawerContent(props: DrawerContentComponentProps) {
-  const { user, logout } = useAuth();
+  const { user, logout } = useUserStore(
+    useShallow((state) => ({
+      user: state.user,
+      logout: state.logout,
+    }))
+  );
   const router = useRouter();
 
   const handleLogout = async () => {
-    await logout();
+    logout();
     router.replace('/(auth)/sign-In');
   };
 

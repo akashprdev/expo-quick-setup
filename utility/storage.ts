@@ -1,37 +1,42 @@
-import { createMMKV } from 'react-native-mmkv';
-
-export const storage = createMMKV();
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const localstorage = {
-  setItem: (key: string, val: any): Promise<boolean> => {
-    const value = typeof val === 'string' ? val : JSON.stringify(val);
-    storage.set(key, value);
-    return Promise.resolve(true);
-  },
-
-  getItem: <T = string>(key: string): Promise<T | null> => {
-    const value = storage.getString(key);
-    if (value === undefined) return Promise.resolve(null);
-
+  setItem: async (key: string, val: any): Promise<boolean> => {
     try {
-      return Promise.resolve(JSON.parse(value) as T);
+      const value = typeof val === 'string' ? val : JSON.stringify(val);
+      await AsyncStorage.setItem(key, value);
+      return true;
     } catch {
-      return Promise.resolve(value as T);
+      return false;
     }
   },
 
-  removeItem: (key: string): Promise<void> => {
-    storage.remove(key);
-    return Promise.resolve();
+  getItem: async <T = string>(key: string): Promise<T | null> => {
+    try {
+      const value = await AsyncStorage.getItem(key);
+      if (value === null) return null;
+
+      try {
+        return JSON.parse(value) as T;
+      } catch {
+        return value as T;
+      }
+    } catch {
+      return null;
+    }
   },
 
-  clearAll: (): Promise<void> => {
-    storage.clearAll();
-    return Promise.resolve();
+  removeItem: async (key: string): Promise<void> => {
+    await AsyncStorage.removeItem(key);
   },
 
-  // 👇 nice extra helper
-  contains: (key: string): boolean => {
-    return storage.contains(key);
+  clearAll: async (): Promise<void> => {
+    await AsyncStorage.clear();
+  },
+
+  // 👇 equivalent helper
+  contains: async (key: string): Promise<boolean> => {
+    const value = await AsyncStorage.getItem(key);
+    return value !== null;
   },
 };

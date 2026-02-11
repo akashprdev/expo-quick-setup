@@ -2,7 +2,7 @@ import { CustomDrawerContent } from '@/components/navigation/CustomDrawerContent
 import { Drawer } from 'expo-router/drawer';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default function DrawerLayout() {
+function DrawerLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <Drawer
@@ -42,3 +42,5 @@ export default function DrawerLayout() {
     </GestureHandlerRootView>
   );
 }
+
+export default DrawerLayout;

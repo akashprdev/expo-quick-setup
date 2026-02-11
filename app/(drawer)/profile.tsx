@@ -1,9 +1,14 @@
-import { useAuth } from '@/contexts/AuthContext';
+import { useUserStore } from '@/store/useUserStore';
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useShallow } from 'zustand/react/shallow';
 
-export default function ProfileScreen() {
-  const { user } = useAuth();
+function ProfileScreen() {
+  const { user } = useUserStore(
+    useShallow((state) => ({
+      user: state.user,
+    }))
+  );
 
   return (
     <ScrollView style={styles.container}>
@@ -88,6 +93,8 @@ export default function ProfileScreen() {
     </ScrollView>
   );
 }
+
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {

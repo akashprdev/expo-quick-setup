@@ -1,11 +1,17 @@
-import { useAuth } from '@/contexts/AuthContext';
+import { useUserStore } from '@/store/useUserStore';
 import { useRouter } from 'expo-router';
 import React, { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, Text, View } from 'react-native';
+import { useShallow } from 'zustand/react/shallow';
 
-export default function SecondSplashScreen() {
+function SecondSplashScreen() {
+  const { isloggedIn } = useUserStore(
+    useShallow((state) => ({
+      isloggedIn: state.isloggedIn,
+    }))
+  );
   const router = useRouter();
-  const { isAuthenticated, isLoading } = useAuth();
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(50)).current;
 
@@ -26,18 +32,15 @@ export default function SecondSplashScreen() {
 
     // Navigate based on auth status after 2 seconds
     const timer = setTimeout(() => {
-      if (!isLoading) {
-        if (isAuthenticated) {
-          router.replace('/(drawer)/(tabs)');
-        } else {
-          router.replace('/(auth)/sign-In');
-        }
+      if (isloggedIn) {
+        router.replace('/(drawer)/(tabs)');
+      } else {
+        router.replace('/(auth)/sign-In');
       }
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [isLoading, isAuthenticated, router, fadeAnim, slideAnim]);
-
+  }, [isloggedIn, router, fadeAnim, slideAnim]);
   return (
     <View style={styles.container}>
       <Animated.View
@@ -64,6 +67,8 @@ export default function SecondSplashScreen() {
     </View>
   );
 }
+
+export default SecondSplashScreen;
 
 const styles = StyleSheet.create({
   container: {

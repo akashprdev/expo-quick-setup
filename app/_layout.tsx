@@ -6,7 +6,6 @@ import './global.css';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { AuthProvider } from '@/contexts/AuthContext';
 import { useEffect, useState } from 'react';
 
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
@@ -53,11 +52,9 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <GluestackUIProvider mode="light">
-          <Slot />
-        </GluestackUIProvider>
-      </AuthProvider>
+      <GluestackUIProvider mode="light">
+        <Slot />
+      </GluestackUIProvider>
     </QueryClientProvider>
   );
 }
