@@ -10,10 +10,11 @@ import { useUserStore } from '@/store/useUserStore';
 import { encryptCrypto } from '@/utility/crypto';
 import { getDeviceAndIpInfo } from '@/utility/getDeviceAndIpInfo';
 import { useForm } from '@tanstack/react-form';
-import { Image, ImageBackground } from 'expo-image';
+import { Image } from 'expo-image';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useShallow } from 'zustand/react/shallow';
 
+import { BackgroundImage } from '@/components/BackgroundImage';
 import { AppToast } from '@/components/ui/toast/AppToast';
 import { CircleCheckBigIcon, CircleXIcon } from 'lucide-react-native';
 import React from 'react';
@@ -103,11 +104,7 @@ function VerifyOtp() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
-      <ImageBackground
-        source={IMAGE_PATH.BLUR_BACKGROUND_IMAGE}
-        style={{ flex: 1 }}
-        blurRadius={10}
-      >
+      <BackgroundImage>
         <View className="flex-1 px-6 justify-between">
           {/* TOP */}
           <View className="items-center mt-10">
@@ -190,7 +187,7 @@ function VerifyOtp() {
             </View>
           </View>
         </View>
-      </ImageBackground>
+      </BackgroundImage>
     </KeyboardAvoidingView>
   );
 }

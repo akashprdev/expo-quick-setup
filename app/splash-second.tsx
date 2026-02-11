@@ -33,7 +33,7 @@ function SecondSplashScreen() {
     // Navigate based on auth status after 2 seconds
     const timer = setTimeout(() => {
       if (isloggedIn) {
-        router.replace('/(drawer)/(tabs)');
+        router.replace('/(drawer)/(tabs)/explore');
       } else {
         router.replace('/(auth)/sign-In');
       }

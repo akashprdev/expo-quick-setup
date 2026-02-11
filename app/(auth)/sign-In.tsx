@@ -1,3 +1,4 @@
+import { BackgroundImage } from '@/components/BackgroundImage';
 import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { Input, InputField, InputSlot } from '@/components/ui/input';
 import { useToast } from '@/components/ui/toast';
@@ -7,7 +8,7 @@ import { useLogInMutation } from '@/services/mutate/auth/user/login';
 import { encryptCrypto } from '@/utility/crypto';
 import { useForm } from '@tanstack/react-form';
 import { AxiosError } from 'axios';
-import { Image, ImageBackground } from 'expo-image';
+import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
 import { CheckCircle2, SendIcon } from 'lucide-react-native';
 
@@ -79,11 +80,7 @@ export default function SignIn() {
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={{ flex: 1 }}
     >
-      <ImageBackground
-        source={IMAGE_PATH.BLUR_BACKGROUND_IMAGE}
-        style={{ flex: 1 }}
-        blurRadius={10}
-      >
+      <BackgroundImage>
         <View className="flex-1 px-6 justify-between">
           {/* TOP */}
           <View className="items-center mt-10">
@@ -169,7 +166,7 @@ export default function SignIn() {
             </View>
           </View>
         </View>
-      </ImageBackground>
+      </BackgroundImage>
     </KeyboardAvoidingView>
   );
 }

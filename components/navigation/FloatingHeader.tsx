@@ -29,8 +29,6 @@ export function FloatingHeader({ title, showMenuButton = true }: FloatingHeaderP
           </TouchableOpacity>
         )}
 
-        <Text style={styles.title}>{title}</Text>
-
         <View style={styles.rightActions}>
           <TouchableOpacity style={styles.iconButton} activeOpacity={0.7}>
             <Text style={styles.iconText}>🔔</Text>
@@ -57,8 +55,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    borderRadius: 20,
+    backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    borderRadius: 50,
     paddingHorizontal: 16,
     paddingVertical: 12,
     shadowColor: '#000',
@@ -67,13 +65,13 @@ const styles = StyleSheet.create({
     shadowRadius: 20,
     elevation: 10,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.3)',
+    borderColor: 'rgba(255, 255, 255, 0.1)',
     ...Platform.select({
       ios: {
         backdropFilter: 'blur(20px)',
       },
       android: {
-        backgroundColor: 'rgba(255, 255, 255, 0.85)',
+        backgroundColor: 'rgba(255, 255, 255, 0.1)',
       },
     }),
   },
@@ -87,24 +85,9 @@ const styles = StyleSheet.create({
   },
   menuLine: {
     width: 24,
-    height: 3,
-    backgroundColor: '#6366f1',
+    height: 2,
+    backgroundColor: '#ffffff',
     borderRadius: 2,
-    shadowColor: '#6366f1',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#1f2937',
-    flex: 1,
-    textAlign: 'center',
-    marginHorizontal: 16,
-    textShadowColor: 'rgba(255, 255, 255, 0.8)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
   },
   rightActions: {
     flexDirection: 'row',
