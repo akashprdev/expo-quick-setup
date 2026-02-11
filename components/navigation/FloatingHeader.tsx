@@ -4,11 +4,10 @@ import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface FloatingHeaderProps {
-  title: string;
   showMenuButton?: boolean;
 }
 
-export function FloatingHeader({ title, showMenuButton = true }: FloatingHeaderProps) {
+export function FloatingHeader({ showMenuButton = true }: FloatingHeaderProps) {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
@@ -17,7 +16,7 @@ export function FloatingHeader({ title, showMenuButton = true }: FloatingHeaderP
   };
 
   return (
-    <View style={[styles.container, { paddingTop: insets.top + 10 }]}>
+    <View style={[styles.container, { paddingTop: Math.max(insets.top, 16) }]}>
       <View style={styles.header}>
         {showMenuButton && (
           <TouchableOpacity style={styles.menuButton} onPress={openDrawer} activeOpacity={0.7}>

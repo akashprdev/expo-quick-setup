@@ -85,7 +85,7 @@ function VerifyOtp() {
             // }
             else {
               setLoggedIn(true);
-              router.push('/(drawer)/(tabs)/explore');
+              router.push('/(drawer)/(tabs)');
             }
           },
           onError: (error: any) => {

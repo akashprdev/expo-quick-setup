@@ -9,6 +9,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 import { GluestackUIProvider } from '@/components/ui/gluestack-ui-provider';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export const unstable_settings = {
   initialRouteName: 'splash-first',
@@ -53,7 +54,9 @@ export default function RootLayout() {
   return (
     <QueryClientProvider client={queryClient}>
       <GluestackUIProvider mode="light">
-        <Slot />
+        <SafeAreaProvider>
+          <Slot />
+        </SafeAreaProvider>
       </GluestackUIProvider>
     </QueryClientProvider>
   );

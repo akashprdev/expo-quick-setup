@@ -1,15 +1,14 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
-import { BackgroundImage } from '@/components/BackgroundImage';
-import { FloatingHeader } from '@/components/navigation/FloatingHeader';
+import PrimaryLayout from '@/components/PrimaryLayout';
 
 export default function HomeScreen() {
   return (
-    <BackgroundImage>
+    <PrimaryLayout>
       <View style={{ flex: 1 }}>
-        <FloatingHeader title="Home" />
+        <Text>Home Screen</Text>
       </View>
-    </BackgroundImage>
+    </PrimaryLayout>
   );
 }
 
