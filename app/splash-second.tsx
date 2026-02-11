@@ -5,9 +5,9 @@ import { Animated, StyleSheet, Text, View } from 'react-native';
 import { useShallow } from 'zustand/react/shallow';
 
 function SecondSplashScreen() {
-  const { isloggedIn } = useUserStore(
+  const { isLoggedIn } = useUserStore(
     useShallow((state) => ({
-      isloggedIn: state.isloggedIn,
+      isLoggedIn: state.isLoggedIn,
     }))
   );
   const router = useRouter();
@@ -32,7 +32,8 @@ function SecondSplashScreen() {
 
     // Navigate based on auth status after 2 seconds
     const timer = setTimeout(() => {
-      if (isloggedIn) {
+      console.log('User logged in:', isLoggedIn);
+      if (isLoggedIn) {
         router.replace('/(drawer)/(tabs)/explore');
       } else {
         router.replace('/(auth)/sign-In');
@@ -40,7 +41,7 @@ function SecondSplashScreen() {
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [isloggedIn, router, fadeAnim, slideAnim]);
+  }, [isLoggedIn, router, fadeAnim, slideAnim]);
   return (
     <View style={styles.container}>
       <Animated.View

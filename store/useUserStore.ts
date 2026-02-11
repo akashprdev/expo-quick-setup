@@ -1,45 +1,42 @@
-import { localstorage } from '@/utility/storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 type User = {
   id: string | null;
   name: string | null;
   email: string | null;
   phone: string | null;
-
   signupComplete?: boolean;
   categorySelected?: boolean;
 };
 
 type UserStore = {
   user: User | null;
-  isloggedIn: boolean;
+  isLoggedIn: boolean;
   setUser: (user: User) => void;
   clearUser: () => void;
   setLoggedIn: (loggedIn: boolean) => void;
   logout: () => void;
 };
 
-export const useUserStore = create<UserStore>((set) => ({
-  user: null,
-  isloggedIn: false,
-  setUser: (user) => {
-    localstorage.setItem('user', JSON.stringify(user));
-    set({ user });
-  },
+export const useUserStore = create<UserStore>()(
+  persist(
+    (set) => ({
+      user: null,
+      isLoggedIn: false,
 
-  clearUser: () => {
-    localstorage.removeItem('user');
-    set({ user: null });
-  },
-  setLoggedIn: (loggedIn) => {
-    localstorage.setItem('isloggedIn', JSON.stringify(loggedIn));
-    set({ isloggedIn: loggedIn });
-  },
+      setUser: (user) => set({ user }),
 
-  logout: () => {
-    localstorage.removeItem('user');
-    localstorage.removeItem('isloggedIn');
-    set({ user: null, isloggedIn: false });
-  },
-}));
+      clearUser: () => set({ user: null }),
+
+      setLoggedIn: (loggedIn) => set({ isLoggedIn: loggedIn }),
+
+      logout: () => set({ user: null, isLoggedIn: false }),
+    }),
+    {
+      name: 'user-storage',
+      storage: createJSONStorage(() => AsyncStorage),
+    }
+  )
+);
