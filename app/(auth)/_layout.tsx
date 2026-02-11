@@ -5,7 +5,8 @@ export default function AuthLayout() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="sign-In" />
+        {/* <Stack.Screen name="sign-In" /> */}
+        <Stack.Screen name="verify-otp" />
       </Stack>
     </SafeAreaView>
   );

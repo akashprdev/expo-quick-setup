@@ -1,76 +1,48 @@
 import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
-import { Input, InputField, InputSlot } from '@/components/ui/input';
+import OtpInput from '@/components/ui/OtpInput';
 import { useToast } from '@/components/ui/toast';
-import { AppToast } from '@/components/ui/toast/AppToast';
 import { IMAGE_PATH } from '@/constants/imagePath';
-import { useLogInMutation } from '@/services/mutate/auth/user/login';
+import {
+  useVerifyOtpMutation,
+  VerifyOtpRequest,
+} from '@/services/mutate/auth/user/verifyVendorOtp';
 import { encryptCrypto } from '@/utility/crypto';
+import { getDeviceAndIpInfo } from '@/utility/getDeviceAndIpInfo';
 import { useForm } from '@tanstack/react-form';
-import { AxiosError } from 'axios';
 import { Image, ImageBackground } from 'expo-image';
-import { useRouter } from 'expo-router';
-import { CheckCircle2, SendIcon } from 'lucide-react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 
 import React from 'react';
 import { KeyboardAvoidingView, Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
-export default function SignIn() {
+export default function VerifyOtp() {
+  const params = useLocalSearchParams();
+
   const router = useRouter();
   const toast = useToast();
 
-  const { mutate: loginMutate, status } = useLogInMutation();
+  const phoneNumber = params.phone as string;
+  const phonePrefix = params.phone_prefix as string;
+
+  const { mutate: otpVerify, status } = useVerifyOtpMutation();
 
   const form = useForm({
     defaultValues: {
-      phone: '',
+      otp: '',
     },
     onSubmit: async ({ value }) => {
-      // Do something with form data
-      loginMutate(
-        { phone: encryptCrypto(value.phone), phone_prefix: '+91' },
-        {
-          onSuccess: (response) => {
-            toast.show({
-              placement: 'bottom',
-              render: ({ id }) => (
-                <AppToast
-                  id={id}
-                  title={response?.message || 'OTP sent successfully'}
-                  icon={SendIcon}
-                />
-              ),
-            });
+      const deviceInfo = await getDeviceAndIpInfo();
 
-            router.push({
-              pathname: '/(auth)/verify-otp',
-              params: {
-                phone: value.phone,
-                phone_prefix: '+91',
-              },
-            });
+      const payload = {
+        phone: encryptCrypto('7504587810'), // Replace with actual phone number
+        otp: encryptCrypto(value.otp),
+        //    fcmtoken: fcmToken || '',
+        device_type: deviceInfo?.device_type || '',
+        ip_address: deviceInfo?.ip_address || '',
+        user_agent: deviceInfo?.user_agent || '',
+      } as VerifyOtpRequest;
 
-            // navigate(navigationStrings.PUBLIC.OTP_VERIFY, {
-            //   phoneNumber: cleanNumber,
-            //   phone_prefix: formValues.phone_prefix,
-            // });
-          },
-          onError: (error: Error) => {
-            const axiosError = error as AxiosError<any>;
-            toast.show({
-              placement: 'bottom',
-              render: ({ id }) => (
-                <AppToast
-                  id={id}
-                  title={
-                    axiosError?.response?.data?.message || 'Failed to send OTP. Please try again.'
-                  }
-                  icon={CheckCircle2}
-                />
-              ),
-            });
-          },
-        }
-      );
+      otpVerify({ payload });
     },
   });
 
@@ -88,33 +60,30 @@ export default function SignIn() {
           {/* TOP */}
           <View className="items-center mt-10">
             <Image source={IMAGE_PATH.TITLE_LOGO} style={styles.titleLogo} contentFit="contain" />
-            <Text className="text-white font-satoshi-bold text-2xl mt-4">Welcome!</Text>
-            <Text className="text-white/80 mt-2 text-center">Enter your phone number below</Text>
-            <Text className="text-white/80 mt-1 text-center">to access your account</Text>
+            <Text className="text-white font-satoshi-bold text-2xl mt-4">Enter Code</Text>
+            <Text className="text-white/80 mt-2 text-center">
+              We’ve sent an SMS with an activation code \nto your phone
+            </Text>
+            <Text className="text-white/80 mt-1 text-center">
+              {phonePrefix} {phoneNumber}
+            </Text>
           </View>
 
           <View className="w-full gap-6">
             <form.Field
-              name="phone"
+              name="otp"
               validators={{
                 onChange: (val) =>
-                  !/^[0-9]{10}$/.test(val.value) ? 'Enter a valid phone number' : undefined,
+                  !/^[0-9]{6}$/.test(val.value) ? 'Enter a valid 6-digit OTP' : undefined,
               }}
             >
               {({ state, handleChange }) => (
                 <View>
-                  <Input variant="outline" size="lg" className="bg-white rounded-lg h-12">
-                    <InputSlot className="pl-3">
-                      <Text>+91</Text>
-                    </InputSlot>
-                    <InputField
-                      className="text-md"
-                      placeholder="Enter Phone Number"
-                      onChangeText={(text) => handleChange(text)}
-                      value={state.value}
-                      keyboardType="number-pad"
-                    />
-                  </Input>
+                  <OtpInput
+                    value={state.value}
+                    onChange={(text) => handleChange(text)}
+                    autoFocus={false}
+                  />
                   {!state.meta.isValid && state.meta.isTouched && (
                     <Text className="text-red-500 text-sm">{state.meta.errors.join(', ')}</Text>
                   )}

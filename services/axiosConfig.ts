@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import axios, { AxiosError } from 'axios';
 
 export interface ApiResponse<T> {
   statusCode: number;
@@ -11,7 +11,7 @@ interface ApiErrorResponse {
   message?: string;
 }
 
-const API_BASE_URL = 'https://api-aumbram-new.estpl.net:8992/api/v1';
+const API_BASE_URL = 'https://api-aumbram-new.estpl.net:8997/api/v1';
 
 let isLoggingOut = false;
 
@@ -26,34 +26,14 @@ export const api = axios.create({
 });
 
 // --------------------
-// Request Interceptor
-// --------------------
-api.interceptors.request.use(
-  async (config: AxiosRequestConfig) => {
-    // const token = await LocalStorage.getItem('token');
-
-    // if (token) {
-    //   config.headers = {
-    //     ...config.headers,
-    //     Authorization: `Bearer ${token}`,
-    //   };
-    // }
-
-    return config;
-  },
-  (error) => Promise.reject(error)
-);
-
-// --------------------
 // Response Interceptor
 // --------------------
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError<ApiErrorResponse>) => {
     const status = error.response?.status;
-    const message = error.response?.data?.message || 'Something went wrong';
 
-    console.log('API Error:', status, message);
+    console.log('API Error:', error);
 
     if (status === 401 && !isLoggingOut) {
       isLoggingOut = true;
