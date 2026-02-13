@@ -132,7 +132,16 @@ export default function SignIn() {
                   <Button
                     onPress={form.handleSubmit}
                     size="lg"
-                    className="h-12 rounded-md bg-primary-500"
+                    style={{
+                      height: 50,
+                      borderRadius: 10,
+                      backgroundColor: '#20323e6f',
+                      borderColor: 'rgba(255, 255, 255, 0.1)',
+                      borderWidth: 1,
+                      shadowOpacity: 0.15,
+                      shadowRadius: 20,
+                      shadowColor: '#000',
+                    }}
                     disabled={!canSubmit || isSubmitting || status === 'pending'}
                   >
                     {isSubmitting || status === 'pending' ? (
