@@ -34,7 +34,7 @@ function SecondSplashScreen() {
     const timer = setTimeout(() => {
       console.log('User logged in:', isLoggedIn);
       if (isLoggedIn) {
-        router.replace('/(drawer)/(tabs)/explore');
+        router.replace('/(drawer)/(tabs)');
       } else {
         router.replace('/(auth)/sign-In');
       }

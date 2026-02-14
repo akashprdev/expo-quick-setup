@@ -16,7 +16,7 @@ export function FloatingHeader({ showMenuButton = true }: FloatingHeaderProps) {
   };
 
   return (
-    <View style={[styles.container, { paddingTop: Math.max(insets.top, 16) }]}>
+    <View style={[styles.container, { paddingTop: Math.max(insets.top) }]}>
       <View style={styles.header}>
         {showMenuButton && (
           <TouchableOpacity style={styles.menuButton} onPress={openDrawer} activeOpacity={0.7}>
@@ -43,7 +43,7 @@ export function FloatingHeader({ showMenuButton = true }: FloatingHeaderProps) {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    position: 'sticky',
     top: 0,
     left: 0,
     right: 0,
