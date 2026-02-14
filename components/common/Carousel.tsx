@@ -40,7 +40,7 @@ function BannerCarousel({ data }: BannerData) {
     <View style={{ flex: 1 }}>
       <Carousel
         ref={ref}
-        style={{ width, height: 258 }}
+        style={{ width, height: 350 }}
         data={data}
         loop
         autoPlay={autoPlay}

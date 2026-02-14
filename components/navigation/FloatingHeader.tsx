@@ -43,7 +43,7 @@ export function FloatingHeader({ showMenuButton = true }: FloatingHeaderProps) {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'sticky',
+    position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
@@ -54,23 +54,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: 'rgba(30, 30, 30, 0.5)',
+    backgroundColor: 'rgba(32, 50, 62, 0.83)',
     borderRadius: 50,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    shadowColor: '#000',
+    shadowColor: 'rgba(0, 0, 0, 0.1)',
     shadowOffset: { width: 0, height: 8 },
     shadowOpacity: 0.15,
     shadowRadius: 20,
     elevation: 10,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.1)',
+    backdropFilter: '20',
+    borderColor: 'rgba(32, 50, 62, 0.3)',
     ...Platform.select({
       ios: {
         backdropFilter: 'blur(20px)',
       },
       android: {
-        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
       },
     }),
   },

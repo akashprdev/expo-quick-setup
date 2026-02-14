@@ -14,7 +14,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false, // Hide default header to use floating header
+        headerShown: false,
         tabBarButton: HapticTab,
         tabBarStyle: {
           position: 'absolute',
@@ -25,21 +25,22 @@ export default function TabLayout() {
           height: 70,
           paddingBottom: 10,
           paddingTop: 10,
-          backgroundColor: 'rgba(30, 30, 30, 0.5)',
+          backgroundColor: 'rgba(0, 0, 0, 0.77)',
           borderTopWidth: 0,
           borderWidth: 1,
-          borderColor: 'rgba(255, 255, 255, 0.1)',
+          borderColor: 'rgba(32, 50, 62, 0.3)',
           shadowColor: '#000',
           shadowOffset: { width: 0, height: -8 },
           shadowOpacity: 0.15,
           shadowRadius: 20,
+
           elevation: 10,
           ...Platform.select({
             ios: {
               backdropFilter: 'blur(20px)',
             },
             android: {
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
             },
           }),
         },
